@@ -1,0 +1,136 @@
+#:import NoTransition kivy.uix.screenmanager.NoTransition
+
+<CustomLabel@Label>:
+    font_size: dp(32)
+    color: (0.9, 0.9, 0.9, 1)
+
+<CustomButton@Button>:
+    background_normal: ''
+    background_color: (0.3, 0.3, 0.3, 1)
+    color: (1, 1, 1, 1)
+    font_size: dp(24)
+    size_hint_y: None
+    height: dp(60)
+
+<CustomTextInput@TextInput>:
+    background_color: (0.2, 0.2, 0.2, 1)
+    foreground_color: (1, 1, 1, 1)
+    font_size: dp(24)
+    size_hint_y: None
+    height: dp(60)
+    multiline: False
+
+<StartScreen>:
+    name: "start_screen"
+    canvas.before:
+        Color:
+            rgba: (0.1, 0.1, 0.1, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    BoxLayout:
+        orientation: 'vertical'
+        padding: [dp(100), dp(200)]
+        spacing: dp(20)
+        CustomLabel:
+            text: "ADB-SYNC"
+        CustomTextInput:
+            id: device_ip
+            hint_text: "Device IP"
+            text: "0.0.0.0"
+        CustomButton:
+            text: "Sync"
+            on_press: root.sync_device()
+
+<ErrorScreen>:
+    name: "error_screen"
+    canvas.before:
+        Color:
+            rgba: (0.1, 0.1, 0.1, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    BoxLayout:
+        orientation: 'vertical'
+        padding: [dp(100), dp(200)]
+        spacing: dp(20)
+        CustomLabel:
+            text: "ADB-SYNC"
+        CustomTextInput:
+            id: error_device_ip
+            hint_text: "Device IP"
+            text: "0.0.0.0"
+        CustomButton:
+            text: "Sync"
+            on_press: root.sync_device()
+        CustomLabel:
+            id: error_message
+            text: "The target device refused the connection"
+            color: (1, 0, 0, 1)
+            font_size: dp(18)
+
+<SuccessLoadingScreen>:
+    name: "success_loading_screen"
+    canvas.before:
+        Color:
+            rgba: (0.1, 0.1, 0.1, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    BoxLayout:
+        orientation: 'vertical'
+        padding: [dp(100), dp(200)]
+        spacing: dp(20)
+        CustomLabel:
+            text: "ADB-SYNC"
+        CustomTextInput:
+            id: loading_device_ip
+            hint_text: "Device IP"
+            text: "0.0.0.0"
+        CustomButton:
+            text: "Sync"
+            on_press: root.sync_device()
+        CustomLabel:
+            text: "Loading..."
+            color: (0, 1, 0, 1)
+            font_size: dp(18)
+
+<MainScreen>:
+    name: "main_screen"
+    canvas.before:
+        Color:
+            rgba: (0.1, 0.1, 0.1, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    BoxLayout:
+        orientation: 'vertical'
+        padding: [dp(100), dp(100)]
+        spacing: dp(20)
+        CustomLabel:
+            text: "ADB-SYNC"
+        CustomTextInput:
+            id: browser_link
+            hint_text: "Open Link on Browser"
+            text: "http://"
+        CustomButton:
+            text: "Go"
+            on_press: root.open_browser_link()
+        Image:
+            id: screenshot
+            source: 'prints/screenshot.png'
+            size_hint: None, None
+            size: dp(400), dp(200)
+            allow_stretch: True
+            keep_ratio: False
+            pos_hint: {'center_x': .5}
+        BoxLayout:
+            size_hint_y: None
+            height: '1dp'
+
+ScreenManager:
+    transition: NoTransition()
+    StartScreen:
+    ErrorScreen:
+    SuccessLoadingScreen:
+    MainScreen:
